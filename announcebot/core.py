@@ -47,8 +47,11 @@ DEFAULT_PREFS = {
     "irc_servers": {
         "bot_name": "announce_bot",
         "address": "",
+        "autoconnect": False,
+        "autoconnect_command": "",
         "channels": {
             "name": "",
+            "autojoin": False,
             "regex": "",
         }
     }
