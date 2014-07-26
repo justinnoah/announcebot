@@ -1,7 +1,7 @@
 #
 # gtkui.py
 #
-# Copyright (C) 2009 Justin Noah <justinnoah@gmail.com>
+# Copyright (C) 2014 Justin Noah <justinnoah@gmail.com>
 #
 # Basic plugin template created by:
 # Copyright (C) 2008 Martijn Voncken <mvoncken@gmail.com>
@@ -62,9 +62,6 @@ class GtkUI(GtkPluginBase):
 
     def on_apply_prefs(self):
         log.debug("applying prefs for AnnounceBot")
-        config = {
-            "test":self.glade.get_widget("txt_test").get_text()
-        }
         client.announcebot.set_config(config)
 
     def on_show_prefs(self):
@@ -72,4 +69,4 @@ class GtkUI(GtkPluginBase):
 
     def cb_get_config(self, config):
         "callback for on show_prefs"
-        self.glade.get_widget("txt_test").set_text(config["test"])
+        pass
