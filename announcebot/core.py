@@ -44,7 +44,14 @@ import deluge.configmanager
 from deluge.core.rpcserver import export
 
 DEFAULT_PREFS = {
-    "test":"NiNiNi"
+    "irc_servers": {
+        "bot_name": "announce_bot",
+        "address": "",
+        "channels": {
+            "name": "",
+            "regex": "",
+        }
+    }
 }
 
 class Core(CorePluginBase):
