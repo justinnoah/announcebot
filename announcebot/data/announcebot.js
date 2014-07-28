@@ -112,6 +112,11 @@ Deluge.ux.preferences.AnnounceBotPage = Ext.extend(Ext.Panel, {
             fieldLabel: 'Auto Connect Cmd'
         });
 
+        this.serverBotName = this.serverSettings.add({
+            xtype: 'textfield',
+            fieldLabel: 'Bot Name'
+        });
+
         this.connectHBox = this.serverSettings.add({
             xtype: 'container',
             layout: 'hbox',
