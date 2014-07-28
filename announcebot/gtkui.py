@@ -110,6 +110,7 @@ class GtkUI(GtkPluginBase):
 
         # Bind some actions
         self.serverList.connect("changed", self.on_server_change)
+        self.btnRemoveServer.connect("clicked", self.on_server_remove)
 
     def on_server_change(self, cmb):
         """
@@ -130,3 +131,28 @@ class GtkUI(GtkPluginBase):
                 self.config[server]['autoconnect_command']
             )
             self.txtBotName.set_text(self.config[server]['bot_name'])
+
+    def on_server_remove(self, btn):
+        """
+        When removing a server from the list, the server must be removed from
+        the combobox and the server config fields need to be reset/cleared
+        """
+
+        itr = self.serverList.get_active_iter()
+
+        if itr:
+            # Server Name
+            server = self.serverList.get_model().get_value(itr, 0)
+
+            # Remove the server from the cmobobox
+            self.serverListStore.remove(itr)
+
+            # Reset server fields
+            self.chkAutoConnect.set_active(False)
+            self.txtAddress.set_text('')
+            self.txtAutoConCmd.set_text('')
+            self.txtBotName.set_text('')
+
+            # Remove the server from the config and save the config
+            del self.config[server]
+            client.announcebot.set_config(self.config)
