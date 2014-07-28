@@ -76,6 +76,23 @@ class GtkUI(GtkPluginBase):
         # Keep track of the config locally, but update when we receive a new
         self.config = config
 
+        # Avoid duplicates in the list
+        self.serverListStore.clear()
+
+        # Server names
+        servers = sorted(config.keys())
+
+        # Add the servers from the config
+        for key in servers:
+            cell = gtk.CellRendererText()
+            self.serverListStore.append([key])
+            self.serverList.pack_end(cell, True)
+
+        # On server list update, select the 1st server if there are any
+        # in the config
+        if servers:
+            self.serverList.set_active(0)
+
     def setup_prefs_page(self):
         # Grab the objects from the glade file
         self.serverList = self.glade.get_widget('cmbServers')
@@ -86,3 +103,7 @@ class GtkUI(GtkPluginBase):
         self.txtAddress = self.glade.get_widget('txtAddress')
         self.txtAutoConCmd = self.glade.get_widget('txtAutoConCmd')
         self.txtBotName = self.glade.get_widget('txtBotName')
+
+        # Setup the ListStore for the Server List ComboBox
+        self.serverListStore = gtk.ListStore(str)
+        self.serverList.set_model(self.serverListStore)
