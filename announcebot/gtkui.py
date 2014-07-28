@@ -51,6 +51,9 @@ class GtkUI(GtkPluginBase):
     def enable(self):
         self.glade = gtk.glade.XML(get_resource("config.glade"))
 
+        # Get widgets, setup signals, etc
+        self.setup_prefs_page()
+
         component.get("Preferences").add_page("AnnounceBot", self.glade.get_widget("prefs_box"))
         component.get("PluginManager").register_hook("on_apply_prefs", self.on_apply_prefs)
         component.get("PluginManager").register_hook("on_show_prefs", self.on_show_prefs)
@@ -72,3 +75,14 @@ class GtkUI(GtkPluginBase):
 
         # Keep track of the config locally, but update when we receive a new
         self.config = config
+
+    def setup_prefs_page(self):
+        # Grab the objects from the glade file
+        self.serverList = self.glade.get_widget('cmbServers')
+        self.btnAddServer = self.glade.get_widget('btnAddServer')
+        self.btnRemoveServer = self.glade.get_widget('btnRemoveServer')
+        self.btnConnect = self.glade.get_widget('btnConnect')
+        self.chkAutoConnect = self.glade.get_widget('chkAutoConnect')
+        self.txtAddress = self.glade.get_widget('txtAddress')
+        self.txtAutoConCmd = self.glade.get_widget('txtAutoConCmd')
+        self.txtBotName = self.glade.get_widget('txtBotName')
