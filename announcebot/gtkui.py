@@ -62,11 +62,13 @@ class GtkUI(GtkPluginBase):
 
     def on_apply_prefs(self):
         log.debug("applying prefs for AnnounceBot")
-        client.announcebot.set_config(config)
+        client.announcebot.set_config(self.config)
 
     def on_show_prefs(self):
         client.announcebot.get_config().addCallback(self.cb_get_config)
 
     def cb_get_config(self, config):
         "callback for on show_prefs"
-        pass
+
+        # Keep track of the config locally, but update when we receive a new
+        self.config = config
