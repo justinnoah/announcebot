@@ -107,3 +107,26 @@ class GtkUI(GtkPluginBase):
         # Setup the ListStore for the Server List ComboBox
         self.serverListStore = gtk.ListStore(str)
         self.serverList.set_model(self.serverListStore)
+
+        # Bind some actions
+        self.serverList.connect("changed", self.on_server_change)
+
+    def on_server_change(self, cmb):
+        """
+        When the server selection changes, we need to update the server config
+        fields
+        """
+
+        itr = cmb.get_active_iter()
+
+        if itr:
+            # Get the server name
+            server = cmb.get_model().get_value(itr, 0)
+
+            # Apply the config data to all server fields
+            self.chkAutoConnect.set_active(self.config[server]['autoconnect'])
+            self.txtAddress.set_text(self.config[server]['address'])
+            self.txtAutoConCmd.set_text(
+                self.config[server]['autoconnect_command']
+            )
+            self.txtBotName.set_text(self.config[server]['bot_name'])
